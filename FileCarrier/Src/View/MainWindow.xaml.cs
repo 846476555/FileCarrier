@@ -35,8 +35,7 @@ namespace FileCarrier.Src.View
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            base.OnClosing(e);
-
+            Hide();
             ((App)Application.Current).IsMainWindowShowing = false;
         }
 

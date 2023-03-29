@@ -102,7 +102,7 @@ namespace FileCarrier
 
             icon.ShowBalloonTip(3000, "You Have A New Message", "Yoo ! Man What's Up ? ", ToolTipIcon.Info);
 
-            icon.MouseClick += (sender, args) =>
+            icon.MouseDoubleClick += (sender, args) =>
             {
                 //Logger.Info("Click icon");
                 if (_canClick)
