@@ -22,7 +22,7 @@ namespace FileCarrier.Src.View
     }
     public sealed class MainWindowViewModel : INotifyPropertyChanged
     {
-        
+
 
         public static MainWindowViewModel Instance { get; private set; }
         public MainWindowViewModel()
@@ -94,8 +94,6 @@ namespace FileCarrier.Src.View
         }
         public void CarryFiles()
         {
-            DateTime date = DateTime.Now;
-
             //FilePath
             //    ZipPath
 
@@ -110,7 +108,7 @@ namespace FileCarrier.Src.View
 
             KeepState = RunningState.Ziping;
 
-            FilesToZip(FilePath, ZipPath + @"\" + date.ToString("yyyy-MM-dd-HH-mm-ss") + @".zip");
+            FilesToZip(FilePath, ZipPath);
 
             KeepState = RunningState.Stop;
         }
@@ -163,11 +161,15 @@ namespace FileCarrier.Src.View
 
             //00:00:04.2261766
             DateTime start = DateTime.Now;
+            DateTime date = DateTime.Now;
+            string floder = date.ToString("yyyy-MM-dd-HH-mm-ss");
+            target += @"\" + floder + @".zip";
             using (FileStream zipToOpen = File.Create(target))
             {
                 using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Update))
                 {
-                    FindAllFiles(origin, "", archive);
+                    archive.CreateEntry(floder + "/");
+                    FindAllFiles(origin, floder + "/", archive);
                 }
             }
 
@@ -196,7 +198,8 @@ namespace FileCarrier.Src.View
                 }
             }
 
-            void Sub(DateTime t1, DateTime t2){
+            void Sub(DateTime t1, DateTime t2)
+            {
                 Console.WriteLine(t1.Subtract(t2).Duration().ToString());
             }
         }
