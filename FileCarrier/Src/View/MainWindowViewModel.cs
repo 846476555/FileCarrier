@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using System.Security.AccessControl;
 using NLog.Targets;
+using System.Timers;
 
 namespace FileCarrier.Src.View
 {
@@ -28,7 +29,10 @@ namespace FileCarrier.Src.View
         public MainWindowViewModel()
         {
             Instance = this;
+            //加载配置
             Init();
+            //开启定时压缩
+            TimeMission();
         }
 
         #region Properties
@@ -70,7 +74,7 @@ namespace FileCarrier.Src.View
             }
         }
 
-        private RunningState _keepState = RunningState.Stop;
+        private RunningState _keepState = RunningState.Running;
         public RunningState KeepState
         {
             get => _keepState;
@@ -83,6 +87,8 @@ namespace FileCarrier.Src.View
             }
         }
 
+        Timer timerMisson;
+
         #endregion
 
         #region Method
@@ -91,6 +97,7 @@ namespace FileCarrier.Src.View
         {
             FilePath = AppConfig.Instance.FilePath;
             ZipPath = AppConfig.Instance.ZipPath;
+            TimeInterval = AppConfig.Instance.TimeInterval;
         }
         public void CarryFiles()
         {
@@ -109,8 +116,35 @@ namespace FileCarrier.Src.View
             KeepState = RunningState.Ziping;
 
             FilesToZip(FilePath, ZipPath);
+            if (timerMisson!=null)
+            {
+                KeepState = RunningState.Running;
+            }
+            else
+            {
 
-            KeepState = RunningState.Stop;
+                KeepState = RunningState.Stop;
+            }
+        }
+
+        public void TimeMission()
+        {
+            if (timerMisson != null)
+            {
+                timerMisson.Stop();
+                timerMisson.Dispose();
+                timerMisson = null;
+            }
+
+            timerMisson = new Timer();
+            timerMisson.Interval = TimeInterval * 60 * 1000;
+            timerMisson.AutoReset= true;
+            timerMisson.Enabled = true;
+            timerMisson.Elapsed += new ElapsedEventHandler((s,e) =>
+            {
+                CarryFiles();
+            });
+            timerMisson.Start();
         }
         public bool MoveFile()
         {

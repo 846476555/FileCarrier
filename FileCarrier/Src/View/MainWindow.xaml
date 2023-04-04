@@ -39,7 +39,7 @@
 
                 <Button Content="保存为默认配置" Click="KeepConfig_OnClick" HorizontalAlignment="Left" Margin="150,195,0,0" VerticalAlignment="Top" Width="100"/>
 
-                <Button x:Name="StartKeep" HorizontalAlignment="Left" Margin="150,324,0,0" VerticalAlignment="Top" Width="80" Click="StartKeep_OnClick">
+                <Button x:Name="StartKeep" HorizontalAlignment="Left" Margin="125,322,0,0" VerticalAlignment="Top" Width="150" Click="StartKeep_OnClick">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Style.Triggers>
@@ -49,6 +49,9 @@
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding KeepState}" Value="{x:Static local:RunningState.Stop}">
                                     <Setter Property="Content" Value="运行"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding KeepState}" Value="{x:Static local:RunningState.Running}">
+                                    <Setter Property="Content" Value="定时运行中,点击立即运行"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>

@@ -59,44 +59,55 @@ namespace FileCarrier.Src.View
 
         private void KeepConfig_OnClick(object sender, RoutedEventArgs e)
         {
+            if (!CheckValid())
+            {
+                return;
+            }
             AppConfig config = AppConfig.Instance;
             config.FilePath = MainWindowViewModel.Instance.FilePath;
             config.ZipPath = MainWindowViewModel.Instance.ZipPath;
+            config.TimeInterval = MainWindowViewModel.Instance.TimeInterval;
             AppConfig.Instance.Save();
             MessageBox.Show("配置保存成功");
         }
         private void StartKeep_OnClick(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(MainWindowViewModel.Instance.FilePath))
+            if (!CheckValid())
             {
-                MessageBox.Show("请指定待压缩源文件文件夹");
                 return;
-            }
-            if (string.IsNullOrEmpty(MainWindowViewModel.Instance.ZipPath))
-            {
-                MessageBox.Show("请指定压缩包存放文件夹");
-                return;
-            }
-
-            bool res = int.TryParse(TimeInterval_TB.Text, out int result);
-            if (res)
-            {
-                if (result == 0)
-                {
-                    MessageBox.Show("运行间隔时间太短");
-                    return;
-                }
-                MainWindowViewModel.Instance.TimeInterval = result;
-            }
-            else
-            {
-                MessageBox.Show("时间间隔输入框，值格式不符");
             }
             Task.Run(() =>
             {
                 MainWindowViewModel.Instance.CarryFiles();
+                MainWindowViewModel.Instance.TimeMission();
             });
         }
+        public bool CheckValid()
+        {
+            if (string.IsNullOrEmpty(MainWindowViewModel.Instance.FilePath))
+            {
+                MessageBox.Show("请指定待压缩源文件文件夹");
+                return false;
+            }
+            if (string.IsNullOrEmpty(MainWindowViewModel.Instance.ZipPath))
+            {
+                MessageBox.Show("请指定压缩包存放文件夹");
+                return false;
+            }
 
+            bool res = int.TryParse(TimeInterval_TB.Text, out int result);
+            if (!res)
+            {
+                MessageBox.Show("时间间隔输入框，值格式不符");
+                return false;
+            }
+            if (result <= 0)
+            {
+                MessageBox.Show("运行间隔时间太短");
+                return false;
+            }
+            MainWindowViewModel.Instance.TimeInterval = result;
+            return true;
+        }
     }
 }

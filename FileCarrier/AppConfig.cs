@@ -23,6 +23,7 @@ namespace FileCarrier
 
         public string ZipPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Target";
 
+        public int TimeInterval { get; set; } = 60;
         #endregion
 
         #region Keep
