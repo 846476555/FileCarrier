@@ -52,7 +52,10 @@ Windows系统
 ## 5.联系方式
 
 - QQ：846476555
-- 项目地址：[FileCarrier](https://gitee.com/cow-boy/file-carrier) （防止朋友访问Github困难、故放在了Gitee）
+- 项目地址：
+  - Gitee：[FileCarrier](https://gitee.com/cow-boy/file-carrier) （~~防止朋友访问Github困难、故放在了Gitee~~）
+  - GitHub：[FileCarrier]([846476555/FileCarrier: Timing zipping files from a folder (github.com)](https://github.com/846476555/FileCarrier))
+
 
 
 
