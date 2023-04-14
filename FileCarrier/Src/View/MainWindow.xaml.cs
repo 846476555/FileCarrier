@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,6 +58,13 @@ namespace FileCarrier.Src.View
                 MainWindowViewModel.Instance.ZipPath = dialog.SelectedPath;
         }
 
+        private void OpenZip_OnClick(object sender, RoutedEventArgs e)
+        {
+            Task.Run(() =>
+            {
+                Process.Start("explorer.exe", MainWindowViewModel.Instance.ZipPath);
+            });
+        }
         private void KeepConfig_OnClick(object sender, RoutedEventArgs e)
         {
             if (!CheckValid())

@@ -36,6 +36,7 @@
                 <!--Button-->
                 <Button x:Name="File_Btn" Content="选择文件夹"  Click="File_OnClick" HorizontalAlignment="Left" Margin="260,25,0,0" VerticalAlignment="Top"/>
                 <Button x:Name="Zip_Btn"  Content="选择文件夹"  Click="Zip_OnClick"  HorizontalAlignment="Left" Margin="260,91,0,0" VerticalAlignment="Top" />
+                <Button x:Name="OpenZip_Btn"  Content="打开文件夹"  Click="OpenZip_OnClick"  HorizontalAlignment="Left" Margin="340,91,0,0" VerticalAlignment="Top" />
 
                 <Button Content="保存为默认配置" Click="KeepConfig_OnClick" HorizontalAlignment="Left" Margin="150,195,0,0" VerticalAlignment="Top" Width="100"/>
 
