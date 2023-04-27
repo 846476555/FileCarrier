@@ -15,6 +15,8 @@ using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using Timer = System.Timers.Timer;
+using IWshRuntimeLibrary;
+using System.IO;
 
 namespace FileCarrier
 {
@@ -54,6 +56,10 @@ namespace FileCarrier
         }
         private void StartApp()
         {
+
+            //生成程序开机自启快捷方式
+            CreatedAutoStartLink();                      
+
             //加载用户配置
             var appConfig = new AppConfig();
             appConfig.Load();
@@ -64,6 +70,8 @@ namespace FileCarrier
 
             //是否打开页面 | 后台挂载
         }
+
+
         public bool IsMainWindowShowing = false;
         private void ShowWindow()
         {
@@ -130,6 +138,35 @@ namespace FileCarrier
         {
             //Logger.Info("show icon");
             _canClick = true;
+        }
+        #endregion
+
+        #region 开机自启
+        private void CreatedAutoStartLink()
+        {
+            //位于用户\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup下
+
+            // 获取启动文件夹路径
+            string startupPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+
+            //程序绝对路径
+            var path = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            //程序目录绝对路径
+            var workingDirectory = Path.GetFullPath(Environment.CurrentDirectory);
+
+            // 创建快捷方式对象
+            WshShell shell = new WshShell();
+            IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(Path.Combine(startupPath, "FileCarrier.lnk"));
+
+            // 设置快捷方式的属性
+            shortcut.TargetPath = path;
+            shortcut.WorkingDirectory = workingDirectory;
+            shortcut.Description = "FileCarrier";
+            //shortcut.IconLocation = "icon绝对路径";//默认未程序的图标
+            shortcut.Save();
+
+            //桌面路径
+            //Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         }
         #endregion
     }
