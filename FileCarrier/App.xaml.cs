@@ -17,6 +17,7 @@ using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using Timer = System.Timers.Timer;
 using IWshRuntimeLibrary;
 using System.IO;
+using File = System.IO.File;
 
 namespace FileCarrier
 {
@@ -47,7 +48,6 @@ namespace FileCarrier
 
             if (!createdNew)
             {
-                //MessageWindow.Show("多媒体管理已经启动");
                 MessageBox.Show("软件已启动");
                 return true;
             }
@@ -56,13 +56,12 @@ namespace FileCarrier
         }
         private void StartApp()
         {
-
-            //生成程序开机自启快捷方式
-            CreatedAutoStartLink();                      
-
             //加载用户配置
             var appConfig = new AppConfig();
             appConfig.Load();
+
+            //开机自启初始化
+            AutoStartInit();
 
             ViewModel = new MainWindowViewModel();
 
@@ -142,8 +141,31 @@ namespace FileCarrier
         #endregion
 
         #region 开机自启
+        private void AutoStartInit()
+        {
+            if (AppConfig.Instance.AutoInit)
+            {
+                //生成程序开机自启快捷方式
+                CreatedAutoStartLink();
+            }
+            else
+            {
+                //从开机自启目录清除程序快捷方式
+                ClearAutoStartLink();
+            }
+        }
+        private void ClearAutoStartLink()
+        {
+            // 获取启动文件夹路径
+            string startupPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+            if (File.Exists(startupPath + "\\FileCarrier.lnk"))
+            {
+                File.Delete(startupPath + "\\FileCarrier.lnk");
+            }
+        }
         private void CreatedAutoStartLink()
         {
+            //不操作注册表
             //位于用户\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup下
 
             // 获取启动文件夹路径
