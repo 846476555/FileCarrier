@@ -19,6 +19,7 @@
                 <TextBlock Text="指定提取文件夹："  HorizontalAlignment="Left" Margin="20,27,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
                 <TextBlock Text="指定压缩文件夹："  HorizontalAlignment="Left" Margin="20,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
                 <TextBlock Text="指定提取间隔："    HorizontalAlignment="Left" Margin="20,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                <TextBlock Text="开机自启："    HorizontalAlignment="Left" Margin="20,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
                 <!--Show-->
                 <!--    FilePath-->
@@ -38,7 +39,9 @@
                 <Button x:Name="Zip_Btn"  Content="选择文件夹"  Click="Zip_OnClick"  HorizontalAlignment="Left" Margin="260,91,0,0" VerticalAlignment="Top" />
                 <Button x:Name="OpenZip_Btn"  Content="打开文件夹"  Click="OpenZip_OnClick"  HorizontalAlignment="Left" Margin="340,91,0,0" VerticalAlignment="Top" />
 
-                <Button Content="保存为默认配置" Click="KeepConfig_OnClick" HorizontalAlignment="Left" Margin="150,195,0,0" VerticalAlignment="Top" Width="100"/>
+                <CheckBox x:Name="AutoInitCheckBox" HorizontalAlignment="Left" Margin="260,190,0,0" VerticalAlignment="Top" IsChecked="{Binding AutoInit}"></CheckBox>
+
+                <Button Content="保存为默认配置" Click="KeepConfig_OnClick" HorizontalAlignment="Left" Margin="150,230,0,0" VerticalAlignment="Top" Width="100"/>
 
                 <Button x:Name="StartKeep" HorizontalAlignment="Left" Margin="125,322,0,0" VerticalAlignment="Top" Width="150" Click="StartKeep_OnClick">
                     <Button.Style>

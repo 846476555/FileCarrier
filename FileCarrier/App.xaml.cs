@@ -58,7 +58,11 @@ namespace FileCarrier
         {
             //加载用户配置
             var appConfig = new AppConfig();
-            appConfig.Load();
+            AppConfig.Instance.Load();
+            AppConfig.Instance.OnConfigChanged += (s, e) =>
+            {
+                AutoStartInit();
+            };
 
             //开机自启初始化
             AutoStartInit();
@@ -141,7 +145,7 @@ namespace FileCarrier
         #endregion
 
         #region 开机自启
-        private void AutoStartInit()
+        public static void AutoStartInit()
         {
             if (AppConfig.Instance.AutoInit)
             {
@@ -154,7 +158,7 @@ namespace FileCarrier
                 ClearAutoStartLink();
             }
         }
-        private void ClearAutoStartLink()
+        private static void ClearAutoStartLink()
         {
             // 获取启动文件夹路径
             string startupPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
@@ -163,7 +167,7 @@ namespace FileCarrier
                 File.Delete(startupPath + "\\FileCarrier.lnk");
             }
         }
-        private void CreatedAutoStartLink()
+        private static void CreatedAutoStartLink()
         {
             //不操作注册表
             //位于用户\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup下

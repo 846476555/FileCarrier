@@ -12,6 +12,7 @@ namespace FileCarrier
     public class AppConfig : Config
     {
         public static AppConfig Instance;
+
         public AppConfig() : base("./config.json")
         {
             Instance = this;
@@ -92,7 +93,7 @@ namespace FileCarrier
         {
             var json = JsonConvert.SerializeObject(this);
             File.WriteAllText(ConfigPath, json);
-            OnConfigChanged?.Invoke(this, EventArgs.Empty);
+            OnConfigChanged?.Invoke(this,new EventArgs());
         }
     }
 }

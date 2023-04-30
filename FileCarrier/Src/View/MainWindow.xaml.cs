@@ -75,6 +75,7 @@ namespace FileCarrier.Src.View
             config.FilePath = MainWindowViewModel.Instance.FilePath;
             config.ZipPath = MainWindowViewModel.Instance.ZipPath;
             config.TimeInterval = MainWindowViewModel.Instance.TimeInterval;
+            config.AutoInit = MainWindowViewModel.Instance.AutoInit;
             AppConfig.Instance.Save();
             MessageBox.Show("配置保存成功");
         }

@@ -74,6 +74,19 @@ namespace FileCarrier.Src.View
             }
         }
 
+        private bool _autoInit = false;
+        public bool AutoInit
+        {
+            get => _autoInit;
+            set
+            {
+                if (_autoInit == value)
+                    return;
+                _autoInit = value;
+                OnPropertyChanged();
+            }
+        }
+
         private RunningState _keepState = RunningState.Running;
         public RunningState KeepState
         {
@@ -98,6 +111,7 @@ namespace FileCarrier.Src.View
             FilePath = AppConfig.Instance.FilePath;
             ZipPath = AppConfig.Instance.ZipPath;
             TimeInterval = AppConfig.Instance.TimeInterval;
+            AutoInit = AppConfig.Instance.AutoInit;
         }
         public void CarryFiles()
         {
